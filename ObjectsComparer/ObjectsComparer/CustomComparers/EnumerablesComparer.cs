@@ -78,6 +78,17 @@ namespace ObjectsComparer
             }
         }
 
+        public bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
+        public bool Compare<T>(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            return Compare(typeof(T), obj1, obj2, out differences, comparisonContext);
+        }
+
         public bool IsMatch(Type type, object obj1, object obj2)
         {
             return type.InheritsFrom(typeof(IEnumerable)) && !type.InheritsFrom(typeof(IEnumerable<>));

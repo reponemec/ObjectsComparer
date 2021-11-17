@@ -83,7 +83,8 @@ namespace ObjectsComparer
 
         public IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, ComparisonContext listComparisonContext)
         {
-            return CalculateDifferences(((object)obj1 ?? obj2).GetType(), obj1, obj2, listComparisonContext);
+            //((object)obj1 ?? obj2).GetType()
+            return CalculateDifferences(typeof(T), obj1, obj2, listComparisonContext);
         }
 
         public bool Compare(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
@@ -94,7 +95,14 @@ namespace ObjectsComparer
 
         public bool Compare(T obj1, T obj2, ComparisonContext comparisonContext)
         {
-            throw new NotImplementedException();
+            var differences = CalculateDifferences(obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
+        public bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
+            return differences.Any();
         }
     }
 }

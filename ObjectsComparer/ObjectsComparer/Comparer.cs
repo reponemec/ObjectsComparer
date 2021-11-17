@@ -54,5 +54,17 @@ namespace ObjectsComparer
             // ReSharper disable once PossibleNullReferenceException
             return (IEnumerable<Difference>)genericMethod.Invoke(comparer, genericMethodParameters);
         }
+
+        public bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
+        public bool Compare<T>(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(typeof(T), obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
     }
 }
