@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ObjectsComparer
 {
     /// <summary>
-    /// Extends interface <see cref="IComparer"/> with an overloaded operation CalculateDifferences, that accepts <see cref="ComparisonContext"/> parameter.
+    /// Extends interface <see cref="IComparer"/> and <see cref="IComparer{T}"/> with overloaded operations CalculateDifferences and Compare that accept <see cref="ComparisonContext"/> parameter.
     /// </summary>
     public static class IComparerExtensions
     {
@@ -36,6 +36,26 @@ namespace ObjectsComparer
             }
 
             return comparer.CalculateDifferences(obj1, obj2);
+        }
+
+        public static bool Compare<T>(this IComparer<T> comparer, T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            if (comparer is IContextableComparer<T> contextableComparer)
+            {
+                return contextableComparer.Compare(obj1, obj2, out differences, comparisonContext);
+            }
+
+            return comparer.Compare(obj1, obj2, out differences);
+        }
+
+        public static bool Compare<T>(this IComparer<T> comparer, T obj1, T obj2, ComparisonContext comparisonContext)
+        {
+            if (comparer is IContextableComparer<T> contextableComparer)
+            {
+                return contextableComparer.Compare(obj1, obj2, comparisonContext);
+            }
+
+            return comparer.Compare(obj1, obj2);
         }
     }
 }

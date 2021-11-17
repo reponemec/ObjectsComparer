@@ -61,6 +61,18 @@ namespace ObjectsComparer
             return CalculateDifferences(obj1, obj2, memberInfo: null, comparisonContext);
         }
 
+        public bool Compare(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
+        public bool Compare(T obj1, T obj2, ComparisonContext comparisonContext)
+        {
+            var differences = CalculateDifferences(obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
         internal IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, MemberInfo memberInfo)
         {
             return CalculateDifferences(obj1, obj2, memberInfo, ComparisonContext.CreateRoot());
