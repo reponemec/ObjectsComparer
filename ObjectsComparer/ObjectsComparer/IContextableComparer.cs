@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ObjectsComparer
 {
     /// <summary>
-    /// Comparer accepting <see cref="ComparisonContext"/>.
+    /// A comparer that accepts <see cref="ComparisonContext"/>.
     /// </summary>
     public interface IContextableComparer
     {
