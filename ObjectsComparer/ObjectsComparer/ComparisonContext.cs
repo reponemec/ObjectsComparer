@@ -123,6 +123,7 @@ namespace ObjectsComparer
                 foreach (var descendant in _descendants)
                 {
                     var differences = descendant.GetDifferences(true);
+
                     foreach (var difference in differences)
                     {
                         yield return difference;

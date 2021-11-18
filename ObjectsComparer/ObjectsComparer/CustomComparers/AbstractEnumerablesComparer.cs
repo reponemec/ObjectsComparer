@@ -9,20 +9,6 @@ namespace ObjectsComparer
 {
     internal abstract class AbstractEnumerablesComparer: AbstractComparer, IComparerWithCondition, IContextableComparer
     {
-        ///// <summary>
-        ///// <see cref="Array"/> member names that will be skipped from comaprison.
-        ///// </summary>
-        //static readonly string[] SkipArrayMemberNameList = new string[] 
-        //{
-        //    nameof(Array.Length),
-        //    "LongLength", 
-        //    nameof(Array.Rank),
-        //    "SyncRoot",
-        //    "IsReadOnly",
-        //    "IsFixedSize",
-        //    "IsSynchronized"
-        //};
-
         protected AbstractEnumerablesComparer(ComparisonSettings settings, BaseComparer parentComparer,
             IComparersFactory factory)
             : base(settings, parentComparer, factory)
@@ -63,6 +49,6 @@ namespace ObjectsComparer
 
         public abstract bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext);
 
-        public abstract bool Compare<T>(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext);
+        public abstract bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext);
     }
 }

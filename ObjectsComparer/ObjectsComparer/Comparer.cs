@@ -61,10 +61,9 @@ namespace ObjectsComparer
             return differences.Any();
         }
 
-        public bool Compare<T>(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        public bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
         {
-            differences = CalculateDifferences(typeof(T), obj1, obj2, comparisonContext);
-            return differences.Any();
+            return Compare(type, obj1, obj2, out _, comparisonContext);
         }
     }
 }

@@ -104,5 +104,10 @@ namespace ObjectsComparer
             differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
             return differences.Any();
         }
+
+        public bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
+        {
+            return Compare(type, obj1, obj2, comparisonContext);
+        }
     }
 }

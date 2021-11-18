@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using ObjectsComparer.Utils;
@@ -33,6 +34,17 @@ namespace ObjectsComparer
             {
                 yield return difference;
             }
+        }
+
+        public override bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
+        {
+            differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
+            return differences.Any();
+        }
+
+        public override bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
+        {
+            return Compare(type, obj1, obj2, out _, comparisonContext);
         }
 
         public override bool IsMatch(Type type, object obj1, object obj2)
