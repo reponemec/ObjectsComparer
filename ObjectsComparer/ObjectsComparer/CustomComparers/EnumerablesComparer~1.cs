@@ -107,7 +107,7 @@ namespace ObjectsComparer
 
         public bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
         {
-            return Compare(type, obj1, obj2, comparisonContext);
+            return Compare(type, obj1, obj2, out _, comparisonContext);
         }
     }
 }
