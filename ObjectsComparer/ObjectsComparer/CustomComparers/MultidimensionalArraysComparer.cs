@@ -36,15 +36,25 @@ namespace ObjectsComparer
             }
         }
 
+        public override bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
+        {
+            return Compare(type, obj1, obj2, out _, comparisonContext);
+        }
+
         public override bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
         {
             differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
             return differences.Any();
+        }               
+
+        public override bool Compare<T>(T obj1, T obj2, ComparisonContext comparisonContext)
+        {
+            return Compare(typeof(T), obj1, obj2, comparisonContext);
         }
 
-        public override bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
+        public override bool Compare<T>(T obj1, T obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
         {
-            return Compare(type, obj1, obj2, out _, comparisonContext);
+            return Compare(typeof(T), obj1, obj2, out differences, comparisonContext);
         }
 
         public override bool IsMatch(Type type, object obj1, object obj2)

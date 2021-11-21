@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using ObjectsComparer.Exceptions;
 using System;
 using ObjectsComparer.Utils;
+using ObjectsComparer.Tests.Utils;
 
 namespace ObjectsComparer.Tests
 {
@@ -83,11 +84,15 @@ namespace ObjectsComparer.Tests
             Assert.AreEqual("3", differences[1].Value2);
 
             var diffsFromCtx = rootCtx.GetDifferences(recursive: true).ToList();
+
+            rootCtx.Shrink();
+            var json = rootCtx.ToJson();
+
             Assert.AreEqual(2, diffsFromCtx.Count);
             Assert.AreEqual(differences[0], diffsFromCtx[0]);
             Assert.AreEqual(differences[1], diffsFromCtx[1]);
-        }
 
+        }
         [Test]
         public void PrimitiveTypeArrayInequalityMember()
         {

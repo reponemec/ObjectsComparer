@@ -7,7 +7,7 @@ using ObjectsComparer.Utils;
 
 namespace ObjectsComparer
 {
-    internal class EnumerablesComparer<T> : EnumerablesComparerBase, IContextableComparer, IContextableComparer<T>
+    internal class EnumerablesComparer<T> : EnumerablesComparerBase, IContextableComparer<T>
     {
         private readonly IComparer<T> _comparer;
 
@@ -21,7 +21,7 @@ namespace ObjectsComparer
             return CalculateDifferences(type, obj1, obj2, ComparisonContext.CreateRoot());
         }
 
-        public IEnumerable<Difference> CalculateDifferences(Type type, object obj1, object obj2, ComparisonContext listComparisonContext)
+        IEnumerable<Difference> CalculateDifferences(Type type, object obj1, object obj2, ComparisonContext listComparisonContext)
         {
             Debug.WriteLine($"{GetType().Name}.{nameof(CalculateDifferences)}: {type.Name}");
 
@@ -83,7 +83,6 @@ namespace ObjectsComparer
 
         public IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, ComparisonContext listComparisonContext)
         {
-            //((object)obj1 ?? obj2).GetType()
             return CalculateDifferences(typeof(T), obj1, obj2, listComparisonContext);
         }
 
@@ -97,17 +96,6 @@ namespace ObjectsComparer
         {
             var differences = CalculateDifferences(obj1, obj2, comparisonContext);
             return differences.Any();
-        }
-
-        public bool Compare(Type type, object obj1, object obj2, out IEnumerable<Difference> differences, ComparisonContext comparisonContext)
-        {
-            differences = CalculateDifferences(type, obj1, obj2, comparisonContext);
-            return differences.Any();
-        }
-
-        public bool Compare(Type type, object obj1, object obj2, ComparisonContext comparisonContext)
-        {
-            return Compare(type, obj1, obj2, out _, comparisonContext);
         }
     }
 }
